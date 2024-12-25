@@ -14,9 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Todolist App",
-  icons: {
-    icon : "/public/favicon.ico"
-  }
+  description: "Todoアプリのチュートリアルです"
 };
 
 export default function RootLayout({
@@ -29,7 +27,27 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <header
+          className="flex justify-center p-10 bg-[rgb(226,226,226)]"
+        >
+          TODO APP
+        </header>
+
+        <main>
+          {children}
+        </main>
+
+        <footer
+          className="flex justify-center p-10 bg-[rgb(199,199,199)]"
+        >
+          <a
+            href={"https://claude.ai/"}
+            className="text-black hover:text-blue-500 underline"
+          >
+            困ったときはClaude
+          </a>
+        </footer>
+        
       </body>
     </html>
   );
