@@ -61,3 +61,17 @@ npm run dev
 ```
 
 ブラウザで `http://localhost:3000` にアクセスして、Next.jsの初期画面が表示されれば環境構築は完了です！
+
+<br>
+
+## 既存ファイルについて
+
+### 1. favicon.ico
+画像ファイルを設定することによって、サイトのアイコンを設定できる。
+
+![icon-setting](https://github.com/user-attachments/assets/20d67542-38e7-4adb-9424-a757c414361f)
+
+[元画像(いらすとや)](https://www.irasutoya.com/2021/01/luffy.html)
+
+### 2. globals.css
+全体のスタイルを管理するCSSファイルです。
