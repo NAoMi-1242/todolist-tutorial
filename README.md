@@ -233,7 +233,7 @@ import "./globals.css";
 
 * 3️⃣
 
-    <span style="color:#0000ff;">localhost:3000/tasks/~ (ex: C演習のレポート )</span> でアクセスすることができる。これは動的なルーティングで、このpage.tsxでパラメータとして「C演習のレポート」を受け取ることができる．
+    <font color="Blue">localhost:3000/tasks/~ (ex: C演習のレポート )</font> でアクセスすることができる。これは動的なルーティングで、このpage.tsxでパラメータとして「C演習のレポート」を受け取ることができる．
 
     - params の title は [title] と合わせないと動かない
     - ( ?example=これで落単とか洒落にならん ) でクエリ指定可能
@@ -261,16 +261,16 @@ import "./globals.css";
     export default Task;
     ```
 
-    <span style="color:#0000ff;">localhost:3000/tasks/C演習のレポート</span>
+    <font color="Blue">localhost:3000/tasks/C演習のレポート</font>
     ```
     タスク： C演習のレポート
     ```
-    <span style="color:#0000ff;">localhost:3000/tasks/C演習のレポート?example=これで落単とか洒落にならん</span>
+    <font color="Blue">localhost:3000/tasks/C演習のレポート?example=これで落単とか洒落にならん</font>
     ```
     タスク： C演習のレポート
     メッセージ： これで落単とか洒落にならん
     ```
-    <span style="color:#0000ff;">localhost:3000/tasks/食パン買う</span>
+    <font color="Blue">localhost:3000/tasks/食パン買う</font>
     ```
     タスク： 食パン買う
     ```
