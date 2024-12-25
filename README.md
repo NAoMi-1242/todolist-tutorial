@@ -1,9 +1,3 @@
-
-```bash
-function Prompt {
-    "$([System.IO.Path]::GetFileName($PWD.Path))> "
-}
-```
 # Next.jsでTodoリストアプリを作ってみよう！
 
 ## 環境構築
@@ -20,36 +14,45 @@ node -v
 npm -v
 ```
 
-### 2. 開発環境の準備
+<br/>
 
-VSCodeなどのコードエディタをインストールすることをお勧めします。
-- [Visual Studio Code](https://code.visualstudio.com/)をダウンロードしてインストール
+### 2. プロジェクトの作成
 
-### 3. プロジェクトの作成
+以下のコードをpowershellにコピペするとパスが短くなって見やすいよ
+```bash
+function Prompt {
+    "$([System.IO.Path]::GetFileName($PWD.Path))> "
+}
+```
+
+<br/>
 
 1. プロジェクトを作成したいディレクトリに移動
 ```bash
-cd Desktop
+cd 好きなとこ
 ```
 
 2. Next.jsプロジェクトの作成
 ```bash
-npx create-next-app@latest todo-app
+npx create-next-app@latest
 ```
 
 3. プロジェクト作成時の質問:
 ```
-✔ Would you like to use TypeScript? › Yes
-✔ Would you like to use ESLint? › Yes
-✔ Would you like to use Tailwind CSS? › Yes
-✔ Would you like to use `src/` directory? › Yes
-✔ Would you like to use App Router? › Yes
-✔ Would you like to customize the default import alias? › No
+√ What is your project named? ... todolist-tutorial
+√ Would you like to use TypeScript? ... Yes
+√ Would you like to use ESLint? ... Yes
+√ Would you like to use Tailwind CSS? ... Yes
+√ Would you like your code inside a `src/` directory? ... Yes
+√ Would you like to use App Router? (recommended) ... Yes
+√ Would you like to use Turbopack for `next dev`? ... No
+√ Would you like to customize the import alias (`@/*` by default)? ... No
 ```
 
 4. プロジェクトディレクトリに移動
-```bash
-cd todo-app
+```
+VSCode
+ファイル => フォルダを開く => todolist-tutorial
 ```
 
 5. 開発サーバーの起動
@@ -58,19 +61,3 @@ npm run dev
 ```
 
 ブラウザで `http://localhost:3000` にアクセスして、Next.jsの初期画面が表示されれば環境構築は完了です！
-
-## トラブルシューティング
-
-### Node.jsのインストールに失敗する場合
-- 管理者権限で実行してみてください
-- アンチウイルスソフトを一時的に無効にしてみてください
-
-### `npm`コマンドが見つからない場合
-- Node.jsを再インストールしてください
-- PCの再起動を試してください
-
-### `create-next-app`実行時にエラーが出る場合
-```bash
-npm cache clean --force
-```
-を実行してから再度試してください。
