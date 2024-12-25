@@ -38,7 +38,7 @@ export default function RootLayout({
         </main>
 
         <footer
-          className="flex justify-center p-10 bg-[rgb(199,199,199)]"
+          className="flex justify-center p-10 bg-[rgb(199,199,199)] fixed bottom-0 w-full"
         >
           <a
             href={"https://claude.ai/"}
