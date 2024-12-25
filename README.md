@@ -91,7 +91,7 @@ import "./globals.css";
 全ページで共通している要素を記述する。
 * メタデータ
 
-    1. favicon.icoの画像のような「Todolist App」のようなタイトルや、検索したときに表示される説明文などを記述できる。
+    「1. favicon.ico」の画像のような「Todolist App」のようなタイトルや、検索したときに表示される説明文などを記述できる。
 
     ![description](https://github.com/user-attachments/assets/7642ae81-fcd4-4bb0-bc57-9adff16a9d3a)
 
