@@ -66,7 +66,7 @@ npm run dev
 
 ## TailWind CSSについて
 
-HTMLタグに簡単に直接CSSを当てることができる。[詳しくは検索してね](https://www.google.com/search?q=tailwind+css+%E8%A7%A3%E8%AA%AC&sca_esv=4d6ae7d55c35ef9b&sxsrf=ADLYWIIGkLg3eDFeRMYxCFRweykBVfo4OQ%3A1735154501049&ei=RVtsZ87bAt7d2roP5t61uAg&oq=TailWind%E3%80%80CSS%E3%80%80%E8%A7%A3%E8%AA%AC&gs_lp=Egxnd3Mtd2l6LXNlcnAiF1RhaWxXaW5k44CAQ1NT44CA6Kej6KqsKgIIADIEEAAYHjIFEAAY7wUyCBAAGIAEGKIEMggQABiABBiiBDIFEAAY7wUyCBAAGIAEGKIESNUNUDZYNnABeAGQAQCYAWegAWeqAQMwLjG4AQHIAQD4AQGYAgKgAm_CAgoQABiwAxjWBBhHmAMAiAYBkAYKkgcDMS4xoAegAg&sclient=gws-wiz-serp)
+HTMLタグに簡単に直接CSSを当てることができるフレームワーク。[詳しくは検索してね](https://www.google.com/search?q=tailwind+css+%E8%A7%A3%E8%AA%AC&sca_esv=4d6ae7d55c35ef9b&sxsrf=ADLYWIIGkLg3eDFeRMYxCFRweykBVfo4OQ%3A1735154501049&ei=RVtsZ87bAt7d2roP5t61uAg&oq=TailWind%E3%80%80CSS%E3%80%80%E8%A7%A3%E8%AA%AC&gs_lp=Egxnd3Mtd2l6LXNlcnAiF1RhaWxXaW5k44CAQ1NT44CA6Kej6KqsKgIIADIEEAAYHjIFEAAY7wUyCBAAGIAEGKIEMggQABiABBiiBDIFEAAY7wUyCBAAGIAEGKIESNUNUDZYNnABeAGQAQCYAWegAWeqAQMwLjG4AQHIAQD4AQGYAgKgAm_CAgoQABiwAxjWBBhHmAMAiAYBkAYKkgcDMS4xoAegAg&sclient=gws-wiz-serp)
 
 * 通常の場合
 
@@ -84,13 +84,13 @@ HTMLタグに簡単に直接CSSを当てることができる。[詳しくは検
     import styles from "./styles.module.css";
 
     export default function HomePage() {
-      return (
-        <header 
-            className={styles.header}
-        >
-            TODO APP
-        </header>
-      );
+        return (
+            <header 
+                className={styles.header}
+            >
+                TODO APP
+            </header>
+        );
     }
     ```
 <br>
@@ -109,8 +109,9 @@ HTMLタグに簡単に直接CSSを当てることができる。[詳しくは検
       );
     }
     ```
+<br>
 
-## 既存ファイルについて
+## 既存ファイルについて　src/app/~
 
 ### 1. favicon.ico
 画像ファイルを設定することによって、サイトのアイコンを設定できる。
@@ -201,4 +202,75 @@ import "./globals.css";
             </html>
         );
     }
+    ```
+<br>
+
+## App Routerについて
+例えば以下のようなフォルダ構成のとき、、、
+```
+/
+├─ src
+│  └─ app
+│     ├─ favicon.ico
+│     ├─ globals.css
+│     ├─ layout.tsx
+│     ├─ page.tsx           //1️⃣
+│     ├─ help
+│     │  └─ page.tsx        //2️⃣
+│     └─ tasks
+│        └─ [title]
+│           └─ page.tsx     //3️⃣
+└─ 設定ファイルなど
+```
+
+* 1️⃣
+
+    [localhost:3000/](http://localhost:3000) でアクセスすることができる。
+
+* 2️⃣
+
+    [localhost:3000/help](http://localhost:3000/help) でアクセスすることができる。
+
+* 3️⃣
+
+    <span style="color:#0000ff;">localhost:3000/tasks/~ (ex: C演習のレポート )</span> でアクセスすることができる。これは動的なルーティングで、このpage.tsxでパラメータとして「C演習のレポート」を受け取ることができる．
+
+    - params の title は [title] と合わせないと動かない
+    - ( ?example=これで落単とか洒落にならん ) でクエリ指定可能
+    > <span style="color:red;">**Next.js 15からparamsの処理が非同期になったのでawait/asyncを使用する。[詳しくはこちら](https://qiita.com/RyuNo-13/items/751511de8b498eeb4a8b)**
+    ```tsx
+    type Params = {
+        params: { title: string }
+        searchParams: { [query: string]: string | string[] | undefined }
+    }
+
+    const Task = async ({ params, searchParams }: Params) => {
+        const { title } = await params;
+        const { example } = await searchParams;
+
+        return (
+            <div>
+                <h1>
+                    {`タスク： ${decodeURIComponent(title)}`}
+                </h1>
+                {example && <p>{`メッセージ： ${decodeURIComponent(example)}`}</p>}
+            </div>
+        )    
+    }
+
+    export default Task;
+    ```
+
+    <span style="color:#0000ff;">localhost:3000/tasks/C演習のレポート</span>
+    ```
+    タスク： C演習のレポート
+    ```
+    <span style="color:#0000ff;">localhost:3000/tasks/C演習のレポート?example=これで落単とか洒落にならん</span>
+    ```
+    タスク： C演習のレポート
+    メッセージ： これで落単とか洒落にならん
+    ```
+    <span style="color:#0000ff;">localhost:3000/tasks/食パン買う</span>
+    ```
+    タスク： 食パン買う
     ```
