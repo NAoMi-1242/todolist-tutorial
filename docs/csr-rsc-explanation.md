@@ -13,7 +13,7 @@
 
 ### CSRの例
 
-\`\`\`tsx
+```tsx
 'use client'
 
 import { useState } from 'react'
@@ -30,7 +30,7 @@ const Counter = () => {
 }
 
 export default Counter
-\`\`\`
+```
 
 ### CSRの特徴
 
@@ -50,7 +50,7 @@ Reactサーバーコンポーネント（RSC）は、Next.js 13のApp Routerで�
 
 ### RSCの例
 
-\`\`\`tsx
+```tsx
 // このファイルはデフォルトでサーバーコンポーネントです
 import { fetchUser } from '../lib/api'
 
@@ -66,7 +66,7 @@ const UserProfile = async ({ userId }) => {
 }
 
 export default UserProfile
-\`\`\`
+```
 
 ### RSCの特徴
 

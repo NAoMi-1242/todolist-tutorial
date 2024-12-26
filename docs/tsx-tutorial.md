@@ -4,7 +4,7 @@ TSX（TypeScript JSX）は、ReactコンポーネントをTypeScriptで書くた
 
 ## 基本的なTSXコンポーネント
 
-\`\`\`tsx
+```tsx
 import React from 'react';
 
 interface GreetingProps {
@@ -16,7 +16,7 @@ const Greeting: React.FC<GreetingProps> = ({ name }) => {
 };
 
 export default Greeting;
-\`\`\`
+```
 
 このコンポーネントは、\`name\`プロパティを受け取り、挨拶文を表示します。
 
@@ -24,7 +24,7 @@ export default Greeting;
 
 Next.jsのページコンポーネントでTSXを使用する例：
 
-\`\`\`tsx
+```tsx
 import { GetServerSideProps } from 'next';
 import Greeting from '../components/Greeting';
 
@@ -48,7 +48,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 };
 
 export default Home;
-\`\`\`
+```
 
 この例では、サーバーサイドでユーザー名を取得し、それをプロパティとしてコンポーネントに渡しています。
 
