@@ -1,12 +1,6 @@
-# App Router概要
-
-Next.jsのApp Routerは、ファイルシステムベースのルーティングを提供します。
-
-## ファイル構造とルーティング
-
-例えば、以下のようなファイル構造の場合：
-
-\`\`\`
+## App Routerについて
+例えば以下のようなフォルダ構成のとき、、、
+```
 /
 ├─ src📁
 │  └─ app📁
@@ -20,38 +14,58 @@ Next.jsのApp Routerは、ファイルシステムベースのルーティング
 │        └─ [title]📁
 │           └─ page.tsx     //3️⃣
 └─ 設定ファイルなど
-\`\`\`
+```
+[created by Dir Maker](https://dir-maker.netlify.app)
 
-1️⃣ \`http://localhost:3000/\` でアクセス可能
-2️⃣ \`http://localhost:3000/help\` でアクセス可能
-3️⃣ \`http://localhost:3000/tasks/~\` (例: C演習のレポート) でアクセス可能
+* 1️⃣
 
-## 動的ルーティング
+    [localhost:3000/](http://localhost:3000) でアクセスすることができる。
 
-\`[title]\`のような動的セグメントを使用すると、URLパラメータを受け取ることができます。
+* 2️⃣
 
-\`\`\`tsx
-type Params = {
-    params: { title: string }
-    searchParams: { [query: string]: string | string[] | undefined }
-}
+    [localhost:3000/help](http://localhost:3000/help) でアクセスすることができる。
 
-const Task = async ({ params, searchParams }: Params) => {
-    const { title } = await params;
-    const { example } = await searchParams;
+* 3️⃣
 
-    return (
-        <div>
-            <h1>{`タスク： ${decodeURIComponent(title)}`}</h1>
-            {example && <p>{`メッセージ： ${decodeURIComponent(example)}`}</p>}
-        </div>
-    )    
-}
+    [localhost:3000/tasks/~ (ex: C演習のレポート )]() でアクセスすることができる。これは動的なルーティングで、このpage.tsxでパラメータとして「C演習のレポート」を受け取ることができる．
 
-export default Task;
-\`\`\`
+    - params の title は [title] と合わせないと動かない
+    - ( ?example=これで落単とか洒落にならん ) でクエリ指定可能
+    > <span style="color:red;">**Next.js 15からparamsの処理が非同期になったのでawait/asyncを使用する。[詳しくはこちら](https://qiita.com/RyuNo-13/items/751511de8b498eeb4a8b)**
+    ```tsx
+    type Params = {
+        params: { title: string }
+        searchParams: { [query: string]: string | string[] | undefined }
+    }
 
-このコンポーネントは、URLパラメータとクエリパラメータの両方を処理できます。
+    const Task = async ({ params, searchParams }: Params) => {
+        const { title } = await params;
+        const { example } = await searchParams;
 
-注意: Next.js 15からparamsの処理が非同期になったため、await/asyncを使用する必要があります。
+        return (
+            <div>
+                <h1>
+                    {`タスク： ${decodeURIComponent(title)}`}
+                </h1>
+                {example && <p>{`メッセージ： ${decodeURIComponent(example)}`}</p>}
+            </div>
+        )    
+    }
 
+    export default Task;
+    ```
+
+    [localhost:3000/tasks/C演習のレポート]()
+    ```
+    タスク： C演習のレポート
+    ```
+    [localhost:3000/tasks/C演習のレポート?example=これで落単とか洒落にならん]()
+    ```
+    タスク： C演習のレポート
+    メッセージ： これで落単とか洒落にならん
+    ```
+    [localhost:3000/tasks/食パン買う]()
+    ```
+    タスク： 食パン買う
+    ```
+<br>
