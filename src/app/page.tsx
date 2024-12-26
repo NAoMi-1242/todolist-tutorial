@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useDatabase, Task, TaskStatus } from '@/utils/indexedDB';
 import Link from 'next/link';
+import { Menu, MenuButton } from '@szhsin/react-menu';
+import '@szhsin/react-menu/dist/index.css';
 
 export default function TodoPage() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -62,7 +64,7 @@ export default function TodoPage() {
     };
 
     return (
-        <div className="w-full flex" style={{ height: 'calc(100vh - 4rem - 4rem - 4rem)' }}>
+        <div className="w-full flex" style={{ height: 'calc(100vh - 13rem)' }}>
             {/* 左側: タスク追加フォーム */}
             <div className="w-1/3 max-w-[300px] p-4 border-r">
                 <h2 className="text-xl font-semibold mb-4">タスクを追加</h2>
@@ -105,57 +107,65 @@ export default function TodoPage() {
             
 
             {/* 右側: タスクリスト */}
-            <div className="w-2/3 p-4 flex flex-col overflow-auto scrollbar-hide">
+            <div className="p-4  w-full flex flex-col overflow-auto scrollbar-hide gap-4">
                 {['not_started', 'in_progress', 'completed'].map((status) => (
-                    <div key={status} className="flex-1 mb-8 last:mb-0 h-1/3">
+                    <div key={status} className="flex-1   h-1/3 border rounded-2xl p-3 shadow-lg">
                         <h2 className="text-xl font-semibold mb-4  bg-white">
                             {status === 'not_started' ? '未着手' : status === 'in_progress' ? '進行中' : '完了'}
                         </h2>
                         <hr className="mb-4" />
-                        <div className="overflow-x-auto scrollbar-hide">
-                            <div className="flex gap-4 pb-4">
-                                {tasks.filter(task => task.status === status).map((task) => (
-                                    <div
-                                        key={task.title}
-                                        className={`border rounded p-4 hover:bg-gray-50 w-60 flex-shrink-0 border-l-4 ${
-                                            status === 'not_started'
-                                                ? 'border-l-gray-300'
-                                                : status === 'in_progress'
-                                                ? 'border-l-blue-300'
-                                                : 'border-l-red-200'
-                                        }`}
-                                    >
-                                        <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="block">
-                                            <div className="space-y-2">
+                        <div className="overflow-x-auto flex gap-4 scrollbar-hide">
+                            {tasks.filter(task => task.status === status).map((task) => (
+                                <div
+                                    key={task.title}
+                                    className={`border rounded-xl hover:bg-gray-50 w-60 flex-shrink-0 border-l-4 flex flex-col  ${
+                                        status === 'not_started'
+                                            ? 'border-l-gray-300'
+                                            : status === 'in_progress'
+                                            ? 'border-l-blue-300'
+                                            : 'border-l-red-200'
+                                    }`}
+                                >
+                                    <div className="space-y-1 flex justify-between items-start">
+                                        <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="flex-grow p-2">
+                                            <div>
                                                 <h3 className="font-semibold">{task.title}</h3>
                                                 {task.description && (
-                                                    <p className="text-gray-600">{task.description}</p>
+                                                    <p className="text-gray-600 line-clamp-1 overflow-hidden text-ellipsis whitespace-nowrap">{task.description}</p>
                                                 )}
                                                 {task.deadline && (
                                                     <p className="text-sm text-gray-500">期限: {task.deadline}</p>
                                                 )}
                                             </div>
                                         </Link>
-                                        <div className="mt-4 flex space-x-4">
-                                            <select
-                                                value={task.status}
-                                                onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
-                                                className="p-2 border rounded"
-                                            >
-                                                <option value="not_started">未着手</option>
-                                                <option value="in_progress">進行中</option>
-                                                <option value="completed">完了</option>
-                                            </select>
-                                            <button
-                                                onClick={() => handleDeleteTask(task.title)}
-                                                className="text-red-500 hover:text-red-600"
-                                            >
-                                                削除
-                                            </button>
-                                        </div>
+                                        <Menu menuButton={<MenuButton className="text-gray-500 hover:text-gray-600 p-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="6" r="2" />
+                                                <circle cx="12" cy="12" r="2" />
+                                                <circle cx="12" cy="18" r="2" />
+                                            </svg>
+                                        </MenuButton>}>
+                                            <div className="p-2">
+                                                <select
+                                                    value={task.status}
+                                                    onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
+                                                    className="w-full p-1.5 border rounded mb-2 hover:bg-gray-50 cursor-pointer"
+                                                >
+                                                    <option value="not_started">未着手</option>
+                                                    <option value="in_progress">進行中</option>
+                                                    <option value="completed">完了</option>
+                                                </select>
+                                                <button 
+                                                    onClick={() => handleDeleteTask(task.title)} 
+                                                    className="w-full text-red-500 hover:bg-red-50 text-left px-2 py-1 rounded transition-colors duration-200"
+                                                >
+                                                    削除
+                                                </button>
+                                            </div>
+                                        </Menu>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 ))}
