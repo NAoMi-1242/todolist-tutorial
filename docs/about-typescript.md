@@ -193,8 +193,6 @@ function sum(...numbers: number[]): number {
 ```
 
 ## 5. ジェネリクス
-
-### ジェネリクス
 ```typescript
 // 基本的なジェネリック関数。型引数Tで任意の型を受け取れる
 function identity<T>(arg: T): T {
@@ -330,8 +328,6 @@ let numbers2 = identity(1) // number型と推論
 
 
 ## 8. Union型とIntersection型
-
-### Union型とIntersection型
 ```typescript
 // 基本的なUnion型。複数の型のいずれかを表現
 type StringOrNumber = string | number
