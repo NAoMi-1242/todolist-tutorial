@@ -69,24 +69,20 @@ export default function TodoPage() {
             <div className="w-1/3 max-w-[300px] p-4 border-r">
                 <h2 className="text-xl font-semibold mb-4">タスクを追加</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <input
-                            type="text"
-                            value={newTask.title}
-                            onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                            placeholder="タスクのタイトル"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
-                    <div>
-                        <input
-                            type="text"
-                            value={newTask.description || ''}
-                            onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                            placeholder="説明（任意）"
-                            className="w-full p-2 border rounded"
-                        />
-                    </div>
+                    <input
+                        type="text"
+                        value={newTask.title}
+                        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                        placeholder="タスクのタイトル"
+                        className="w-full p-2 border rounded"
+                    />
+                    <input
+                        type="text"
+                        value={newTask.description || ''}
+                        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                        placeholder="説明（任意）"
+                        className="w-full p-2 border rounded"
+                    />
                     <div className="flex space-x-2">
                         <input
                             type="date"
