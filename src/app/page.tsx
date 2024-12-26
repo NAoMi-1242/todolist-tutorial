@@ -87,14 +87,24 @@ export default function TodoPage() {
                             className="w-full p-2 border rounded"
                         />
                     </div>
-                    <div>
+                    <div className="flex space-x-2">
                         <input
                             type="date"
                             value={newTask.deadline || ''}
                             onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
-                            className="w-full p-2 border rounded"
+                            className="w-1/2 p-2 border rounded"
                         />
+                        <select
+                            value={newTask.status}
+                            onChange={(e) => setNewTask({ ...newTask, status: e.target.value as TaskStatus })}
+                            className="w-1/2 p-1.5 border rounded hover:bg-gray-50 cursor-pointer"
+                        >
+                            <option value="not_started">未着手</option>
+                            <option value="in_progress">進行中</option>
+                            <option value="completed">完了</option>
+                        </select>
                     </div>
+                    
                     <button
                         type="submit"
                         className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
