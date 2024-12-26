@@ -19,8 +19,6 @@ TypeScriptはMicrosoftによって開発された、JavaScriptのスーパーセ
 
 ## 2. 基本的な型
 
-[最初の説明部分は同じなので省略...]
-
 ### プリミティブ型
 ```typescript
 // 文字列型の基本的な使用例。変数展開が可能なテンプレートリテラルも使用可能
@@ -80,6 +78,8 @@ let dict: Dictionary = {
   "en": "hello"
 }
 ```
+
+## 2. 型エイリアスとインターフェース
 
 ### 型エイリアス（type）
 ```typescript
@@ -143,6 +143,8 @@ interface User {  // 同名のインターフェースがマージされる
 }
 ```
 
+## 4. 関数の型定義
+
 ### 基本的な関数の型定義
 ```typescript
 // 通常の関数定義。パラメータと戻り値の型を指定
@@ -189,6 +191,8 @@ function sum(...numbers: number[]): number {
   return numbers.reduce((total, n) => total + n, 0)
 }
 ```
+
+## 5. ジェネリクス
 
 ### ジェネリクス
 ```typescript
@@ -252,6 +256,8 @@ function getProperty<T, K extends keyof T>(obj: T, key: K): T[K] {
 }
 ```
 
+## 6. クラス
+
 ### クラスの基本的な定義
 ```typescript
 // アクセス修飾子とreadonlyを使用したクラス定義
@@ -299,6 +305,31 @@ class Employee extends Person {
   }
 }
 ```
+
+## 7. 型推論
+TypeScriptは多くの場合、型を自動的に推論できます。
+```ts
+// 変数の型推論
+let message = "Hello" // string型と推論
+let numbers = [1, 2, 3] // number[]型と推論
+
+// オブジェクトの型推論
+let user = {
+  name: "太郎",
+  age: 20
+} // { name: string; age: number }型と推論
+
+// 関数の戻り値の型推論
+function add(a: number, b: number) {
+  return a + b  // number型と推論
+}
+
+// ジェネリックの型推論
+let numbers2 = identity(1) // number型と推論
+```
+
+
+## 8. Union型とIntersection型
 
 ### Union型とIntersection型
 ```typescript
@@ -359,7 +390,9 @@ interface Serializable {
 type LoggableAndSerializable = Loggable & Serializable
 ```
 
-### 分割代入とスプレッド構文
+
+## 9. 分割代入とスプレッド構文
+
 ```typescript
 // オブジェクトの分割代入で必要なプロパティを抽出
 const user = {
@@ -394,7 +427,7 @@ console.log(head)                 // 最初の要素
 console.log(tail)                 // 残りの要素の配列
 ```
 
-### React/Next.jsでのTypeScript
+## 10. React/Next.jsでのTypeScript
 ```typescript
 // Propsの型定義。必須とオプショナルを明確に区別
 type ButtonProps = {
@@ -465,20 +498,15 @@ const myCanvas2 = <HTMLCanvasElement>document.getElementById("main_canvas")
 const value = "123" as unknown as number   // 非推奨だが必要な場合もある
 ```
 
-4. リテラル型の活用
+### リテラル型の活用
    ```typescript
    type Direction = "up" | "down" | "left" | "right"
    type HttpMethod = "GET" | "POST" | "PUT" | "DELETE"
    ```
 
-5. 型ガードの使用
+### 型ガードの使用
    ```typescript
    function isString(value: unknown): value is string {
      return typeof value === "string"
    }
    ```
-
-### 便利なVSCode拡張機能
-- TypeScript TSLint Plugin
-- TypeScript Debugger
-- Path Intellisense
