@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDatabase, Task, TaskStatus } from '@/utils/indexedDB';
-import TaskList from '@/components/TaskList';
 import Link from 'next/link';
 
 export default function TodoPage() {
@@ -63,93 +62,100 @@ export default function TodoPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            {/* タスク追加フォーム */}
-            <form onSubmit={handleSubmit} className="mb-8 space-y-4 border rounded p-4">
+        <div className="w-full flex" style={{ height: 'calc(100vh - 4rem - 4rem - 4rem)' }}>
+            {/* 左側: タスク追加フォーム */}
+            <div className="w-1/3 max-w-[300px] p-4 border-r">
                 <h2 className="text-xl font-semibold mb-4">タスクを追加</h2>
-                <div>
-                    <input
-                        type="text"
-                        value={newTask.title}
-                        onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                        placeholder="タスクのタイトル"
-                        className="w-full p-2 border rounded"
-                    />
-                </div>
-                <div>
-                    <input
-                        type="text"
-                        value={newTask.description || ''}
-                        onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                        placeholder="説明（任意）"
-                        className="w-full p-2 border rounded"
-                    />
-                </div>
-                <div>
-                    <input
-                        type="date"
-                        value={newTask.deadline || ''}
-                        onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
-                        className="w-full p-2 border rounded"
-                    />
-                </div>
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                    タスクを追加
-                </button>
-                {error && <p className="text-red-500">{error}</p>}
-            </form>
-
-            {/* タスクリストコンポーネント */}
-            {/* <TaskList
-                tasks={tasks}
-                onUpdateStatus={handleUpdateStatus}
-                onDeleteTask={handleDeleteTask}
-            /> */}
-            <div className="space-y-4">
-                {tasks.map((task) => (
-                    <div
-                        key={task.title}
-                        className="border rounded p-4 flex items-center justify-between hover:bg-gray-50"
+                <form onSubmit={handleSubmit} className="space-y-4">
+                    <div>
+                        <input
+                            type="text"
+                            value={newTask.title}
+                            onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                            placeholder="タスクのタイトル"
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            value={newTask.description || ''}
+                            onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                            placeholder="説明（任意）"
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="date"
+                            value={newTask.deadline || ''}
+                            onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                     >
-                        <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="flex-1">
-                            <div className="space-y-2">
-                                <h3 className="font-semibold">{task.title}</h3>
-                                {task.description && (
-                                    <p className="text-gray-600">
-                                        {task.description}
-                                    </p>
-                                )}
-                                {task.deadline && (
-                                    <p className="text-sm text-gray-500">
-                                        期限: {task.deadline}
-                                    </p>
-                                )}
+                        タスクを追加
+                    </button>
+                    {error && <p className="text-red-500">{error}</p>}
+                </form>
+            </div>
+            
+
+            {/* 右側: タスクリスト */}
+            <div className="w-2/3 p-4 flex flex-col overflow-auto scrollbar-hide">
+                {['not_started', 'in_progress', 'completed'].map((status) => (
+                    <div key={status} className="flex-1 mb-8 last:mb-0 h-1/3">
+                        <h2 className="text-xl font-semibold mb-4  bg-white">
+                            {status === 'not_started' ? '未着手' : status === 'in_progress' ? '進行中' : '完了'}
+                        </h2>
+                        <hr className="mb-4" />
+                        <div className="overflow-x-auto scrollbar-hide">
+                            <div className="flex gap-4 pb-4">
+                                {tasks.filter(task => task.status === status).map((task) => (
+                                    <div
+                                        key={task.title}
+                                        className={`border rounded p-4 hover:bg-gray-50 w-60 flex-shrink-0 border-l-4 ${
+                                            status === 'not_started'
+                                                ? 'border-l-gray-300'
+                                                : status === 'in_progress'
+                                                ? 'border-l-blue-300'
+                                                : 'border-l-red-200'
+                                        }`}
+                                    >
+                                        <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="block">
+                                            <div className="space-y-2">
+                                                <h3 className="font-semibold">{task.title}</h3>
+                                                {task.description && (
+                                                    <p className="text-gray-600">{task.description}</p>
+                                                )}
+                                                {task.deadline && (
+                                                    <p className="text-sm text-gray-500">期限: {task.deadline}</p>
+                                                )}
+                                            </div>
+                                        </Link>
+                                        <div className="mt-4 flex space-x-4">
+                                            <select
+                                                value={task.status}
+                                                onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
+                                                className="p-2 border rounded"
+                                            >
+                                                <option value="not_started">未着手</option>
+                                                <option value="in_progress">進行中</option>
+                                                <option value="completed">完了</option>
+                                            </select>
+                                            <button
+                                                onClick={() => handleDeleteTask(task.title)}
+                                                className="text-red-500 hover:text-red-600"
+                                            >
+                                                削除
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        </Link>
-                        <div className="flex items-center space-x-4">
-                            <select
-                                value={task.status}
-                                onChange={(e) =>
-                                    handleUpdateStatus(
-                                        task.title,
-                                        e.target.value as TaskStatus
-                                    )
-                                }
-                                className="p-2 border rounded"
-                            >
-                                <option value="not_started">未着手</option>
-                                <option value="in_progress">進行中</option>
-                                <option value="completed">完了</option>
-                            </select>
-                            <button
-                                onClick={() => handleDeleteTask(task.title)}
-                                className="text-red-500 hover:text-red-600"
-                            >
-                                削除
-                            </button>
                         </div>
                     </div>
                 ))}

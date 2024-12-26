@@ -28,7 +28,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header
-          className="flex justify-center p-10 bg-[rgb(226,226,226)]"
+          className="flex justify-center p-10 bg-[rgb(226,226,226)] sticky top-0 w-full"
         >
           TODO APP
         </header>

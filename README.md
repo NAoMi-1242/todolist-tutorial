@@ -222,6 +222,7 @@ import "./globals.css";
 │           └─ page.tsx     //3️⃣
 └─ 設定ファイルなど
 ```
+[created by Dir Maker](https://dir-maker.netlify.app)
 
 * 1️⃣
 
