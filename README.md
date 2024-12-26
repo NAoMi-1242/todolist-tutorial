@@ -2,6 +2,7 @@
 
 1. [環境構築](docs/environment-setup.md)
 2. [初期ファイルについて](docs/project-structure.md)
-3. [Tailwind CSS入門](docs/tailwind-css-intro.md)
-4. [App Router概要](docs/app-router-overview.md)
-5. [React Hooks入門](docs/react-hooks-intro.md)
+3. [Tailwind CSSについて](docs/tailwind-css-intro.md)
+4. [App Routerについて](docs/app-router-overview.md)
+5. [React Hooksについて](docs/react-hooks-intro.md)
+6. [デプロイについて](docs/deployment-guide.md)
