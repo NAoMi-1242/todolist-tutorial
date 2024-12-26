@@ -17,7 +17,7 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
 
     useEffect(() => {
         loadTask();
-    }, [title]);
+    }, []);
 
     const loadTask = async () => {
         const loadedTask = await getTask(title);

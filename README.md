@@ -275,5 +275,3 @@ import "./globals.css";
     ```
     タスク： 食パン買う
     ```
-
-    [indexedDB](https://github.com/NAoMi-1242/todolist-tutorial/blob/main/src/utils/indexedDB.ts)
