@@ -1,4 +1,4 @@
-import TaskDetail from "./task";
+import TaskDetail from "./Task";
 
 export default async function ChannelPageWrapper({ params }: { params: { title: string } }) {
     const { title } = await params;
