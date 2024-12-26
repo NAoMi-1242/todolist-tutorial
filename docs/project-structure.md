@@ -1,4 +1,4 @@
-## 既存ファイルについて　src/app/~
+## 初期ファイルについて　src/app/~
 
 * **favicon.ico**
 
