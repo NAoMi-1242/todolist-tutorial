@@ -118,7 +118,7 @@ export default function TodoPage() {
                             {tasks.filter(task => task.status === status).map((task) => (
                                 <div
                                     key={task.title}
-                                    className={`border rounded-xl hover:bg-gray-50 w-60 flex-shrink-0 border-l-4 flex flex-col  ${
+                                    className={`border rounded-xl hover:bg-gray-50 w-60 flex-shrink-0 border-l-4 flex flex-col relative ${
                                         status === 'not_started'
                                             ? 'border-l-gray-300'
                                             : status === 'in_progress'
@@ -126,44 +126,47 @@ export default function TodoPage() {
                                             : 'border-l-red-200'
                                     }`}
                                 >
-                                    <div className="space-y-1 flex justify-between items-start">
-                                        <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="flex-grow p-2">
-                                            <div>
-                                                <h3 className="font-semibold">{task.title}</h3>
-                                                {task.description && (
-                                                    <p className="text-gray-600 line-clamp-1 overflow-hidden text-ellipsis whitespace-nowrap">{task.description}</p>
-                                                )}
-                                                {task.deadline && (
-                                                    <p className="text-sm text-gray-500">期限: {task.deadline}</p>
-                                                )}
-                                            </div>
-                                        </Link>
-                                        <Menu menuButton={<MenuButton className="text-gray-500 hover:text-gray-600 p-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
-                                                <circle cx="12" cy="6" r="2" />
-                                                <circle cx="12" cy="12" r="2" />
-                                                <circle cx="12" cy="18" r="2" />
-                                            </svg>
-                                        </MenuButton>}>
-                                            <div className="p-2">
-                                                <select
-                                                    value={task.status}
-                                                    onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
-                                                    className="w-full p-1.5 border rounded mb-2 hover:bg-gray-50 cursor-pointer"
-                                                >
-                                                    <option value="not_started">未着手</option>
-                                                    <option value="in_progress">進行中</option>
-                                                    <option value="completed">完了</option>
-                                                </select>
-                                                <button 
-                                                    onClick={() => handleDeleteTask(task.title)} 
-                                                    className="w-full text-red-500 hover:bg-red-50 text-left px-2 py-1 rounded transition-colors duration-200"
-                                                >
-                                                    削除
-                                                </button>
-                                            </div>
-                                        </Menu>
-                                    </div>
+                                    <Menu 
+                                        menuButton={
+                                            <MenuButton className="text-gray-500 hover:text-gray-600 p-2 absolute top-1 right-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="w-5 h-5" viewBox="0 0 24 24">
+                                                    <circle cx="12" cy="6" r="2" />
+                                                    <circle cx="12" cy="12" r="2" />
+                                                    <circle cx="12" cy="18" r="2" />
+                                                </svg>
+                                            </MenuButton>
+                                        }
+                                        portal
+                                    >
+                                        <div className="pl-2 pr-2 z-50">
+                                            <select
+                                                value={task.status}
+                                                onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
+                                                className="w-full p-1.5 border rounded mb-2 hover:bg-gray-50 cursor-pointer"
+                                            >
+                                                <option value="not_started">未着手</option>
+                                                <option value="in_progress">進行中</option>
+                                                <option value="completed">完了</option>
+                                            </select>
+                                            <button 
+                                                onClick={() => handleDeleteTask(task.title)} 
+                                                className="w-full text-red-500 hover:bg-red-50 text-left px-2 py-1 rounded transition-colors duration-200"
+                                            >
+                                                削除
+                                            </button>
+                                        </div>
+                                    </Menu>
+                                    <Link href={`/tasks/${encodeURIComponent(task.title)}`} className="flex-grow p-2 pr-10">
+                                        <div className="max-w-full">
+                                            <h3 className="font-semibold truncate">{task.title}</h3>
+                                            {task.description && (
+                                                <p className="text-gray-600 truncate">{task.description}</p>
+                                            )}
+                                            {task.deadline && (
+                                                <p className="text-sm text-gray-500">期限: {task.deadline}</p>
+                                            )}
+                                        </div>
+                                    </Link>
                                 </div>
                             ))}
                         </div>
