@@ -192,13 +192,13 @@ HTMLタグに簡単に直接CSSを当てることができるフレームワー�
                 <html lang="jp">
                     <body>
                         // header
-    
-    
+
+
                         <main>
                             {children}
                         </main>
-    
-    
+
+
                         // footer
                     </body>
                 </html>
@@ -281,11 +281,20 @@ HTMLタグに簡単に直接CSSを当てることができるフレームワー�
 
 ## React Hooksについて
 
-Reactにある便利な機能。主に使うものを紹介する。
+Reactにある便利な機能。使用する際はファイル冒頭にいかが必要。
+```tsx
+'use client';
+
+　　～～～
+```
+
+主に使うものを紹介する。
 
 * **useState**
 
     ```tsx
+    import { useState } from 'react';
+
     const [ 状態変数, セッター関数 ] = useState< 型 >( 初期値 );
     ```
     変数を管理するHooksであり、セッター関数を使用して状態を設定すると、関連する要素を再レンダリングしてくれる。
@@ -320,6 +329,8 @@ Reactにある便利な機能。主に使うものを紹介する。
 * **useEffect**
 
     ```tsx
+    import { useEffect } from 'react';
+
     useEffect(() => {
 
         // 副作用の処理
