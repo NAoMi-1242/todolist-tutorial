@@ -10,7 +10,6 @@ interface TaskDetailProps {
 
 const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
     const [task, setTask] = useState<Task | null>(null);
-    const [editedTask, setEditedTask] = useState<Task | null>(null);
     const [error, setError] = useState<string>('');
     const router = useRouter();
     const { getTask, updateTask, deleteTask } = useDatabase();
@@ -22,21 +21,20 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
     const loadTask = async () => {
         const loadedTask = await getTask(title);
         setTask(loadedTask);
-        setEditedTask(loadedTask);
     };
 
-    if (!task || !editedTask) {
+    if (!task) {
         return <div>Loading...</div>;
     }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!editedTask.title.trim()) {
+        if (!task.title.trim()) {
             setError('タイトルは必須です');
             return;
         }
 
-        const result = await updateTask(title, editedTask);
+        const result = await updateTask(title, task);
         if (result.success) {
             router.push('/');
         } else {
@@ -48,11 +46,13 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
         const result = await deleteTask(title);
         if (result.success) {
             router.push('/');
+        } else {
+            setError(result.message);
         }
     };
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 overflow-auto scrollbar-hide" style={{ height: 'calc(100vh - 13rem)' }}>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                     <label className="block text-sm font-medium text-gray-700">
@@ -60,9 +60,9 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
                     </label>
                     <input
                         type="text"
-                        value={editedTask.title}
+                        value={task.title}
                         onChange={(e) =>
-                            setEditedTask({ ...editedTask, title: e.target.value })
+                            setTask({ ...task, title: e.target.value })
                         }
                         className="w-full p-2 border rounded mt-1"
                     />
@@ -73,9 +73,9 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
                         説明
                     </label>
                     <textarea
-                        value={editedTask.description || ''}
+                        value={task.description || ''}
                         onChange={(e) =>
-                            setEditedTask({ ...editedTask, description: e.target.value })
+                            setTask({ ...task, description: e.target.value })
                         }
                         className="w-full p-2 border rounded mt-1"
                         rows={4}
@@ -88,9 +88,9 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
                     </label>
                     <input
                         type="date"
-                        value={editedTask.deadline || ''}
+                        value={task.deadline || ''}
                         onChange={(e) =>
-                            setEditedTask({ ...editedTask, deadline: e.target.value })
+                            setTask({ ...task, deadline: e.target.value })
                         }
                         className="w-full p-2 border rounded mt-1"
                     />
@@ -101,10 +101,10 @@ const TaskDetail: React.FC<TaskDetailProps> = ({ title }) => {
                         ステータス
                     </label>
                     <select
-                        value={editedTask.status}
+                        value={task.status}
                         onChange={(e) =>
-                            setEditedTask({
-                                ...editedTask,
+                            setTask({
+                                ...task,
                                 status: e.target.value as Task['status']
                             })
                         }

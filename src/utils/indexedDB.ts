@@ -1,12 +1,10 @@
 import { Dexie, Table } from 'dexie';
 
-export type TaskStatus = 'not_started' | 'in_progress' | 'completed';
-
 export interface Task {
     title: string;
     description?: string | null;
     deadline?: string | null;
-    status: TaskStatus;
+    status: 'not_started' | 'in_progress' | 'completed';
 }
 
 class MyDatabase extends Dexie {

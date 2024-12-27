@@ -143,6 +143,91 @@ interface User {  // 同名のインターフェースがマージされる
 }
 ```
 
+
+TypeScriptにおける`interface`と`type aliases`の使用可能な型と使い分けについて説明します。
+
+### 型の比較表
+
+| 型の種類 | Type Aliases | Interface | 例 |
+|---------|--------------|-----------|-----|
+| プリミティブ型 | ✅ | ✅ | `string`, `number`, `boolean` |
+| オブジェクト型 | ✅ | ✅ | `{ x: number, y: string }` |
+| 配列型 | ✅ | ✅ | `string[]`, `Array<number>` |
+| タプル型 | ✅ | ✅ | `[string, number]` |
+| ユニオン型 | ✅ | ✅ | `'a' \| 'b' \| 'c'` |
+| リテラル型 | ✅ | ✅ | `42`, `"hello"` |
+| ジェネリック型 | ✅ | ✅ | `Array<T>` |
+| ユーティリティ型 | ✅ | ✅ | `Readonly<T>`, `Partial<T>` |
+| インターセクション型 | ✅ | ⚠️ | `A & B`（interfaceではextends句で実現） |
+| マップ型 | ✅ | ❌ | `{ [K in 'a' \| 'b']: boolean }` |
+| 条件付き型 | ✅ | ❌ | `T extends U ? X : Y` |
+| 宣言のマージ | ❌ | ✅ | 同名interfaceの複数定義が可能 |
+
+### 使い分けのポイント
+
+### Interfaceを使用する場合
+
+- 単純なオブジェクト型の定義
+- 継承（extends）を使用する場合
+- 宣言のマージが必要な場合
+
+```typescript
+// 基本的なinterfaceの定義
+interface User {
+    name: string;
+    age: number;
+}
+
+// 宣言のマージの例
+interface User {
+    email: string;
+}
+
+// 継承の例
+interface AdminUser extends User {
+    role: 'admin';
+    permissions: string[];
+}
+```
+
+### Type Aliasesを使用する場合
+
+- ユニオン型やインターセクション型を直接定義する場合
+- マップ型や条件付き型が必要な場合
+- 複雑な型の演算や合成が必要な場合
+
+```typescript
+// ユニオン型の例
+type Status = 'active' | 'inactive';
+
+// マップ型の例
+type UserMap = {
+    [K in Status]: User
+};
+
+// 条件付き型の例
+type ExtractArray<T> = T extends Array<infer U> ? U : never;
+```
+
+### ベストプラクティス
+
+1. 単純なオブジェクト型の定義には`interface`を優先して使用する
+2. 複雑な型の演算や合成が必要な場合は`type`を使用する
+3. 宣言のマージが必要な場合は必ず`interface`を使用する
+4. パフォーマンスを考慮する場合、`interface`の方がコンパイル時の処理が効率的
+
+### 注意点
+
+- `interface`でインターセクション型を使用する場合は、`extends`句を使用して実現する必要がある
+- `type`は宣言のマージができないため、拡張が必要な場合は最初から`interface`を使用することを検討する
+- どちらを使用するかは、プロジェクトの要件や開発チームの方針に従って決定する
+
+### 参考リンク
+
+- [TypeScript公式ドキュメント - Interfaces](https://www.typescriptlang.org/docs/handbook/interfaces.html)
+- [TypeScript公式ドキュメント - Type Aliases](https://www.typescriptlang.org/docs/handbook/advanced-types.html#type-aliases)
+
+
 ## 4. 関数の型定義
 
 ### 基本的な関数の型定義

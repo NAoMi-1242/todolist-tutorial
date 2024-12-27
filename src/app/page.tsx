@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useDatabase, Task, TaskStatus } from '@/utils/indexedDB';
+import { useDatabase, Task } from '@/utils/indexedDB';
 import Link from 'next/link';
 
 export default function TodoPage() {
@@ -47,7 +47,7 @@ export default function TodoPage() {
         }
     };
 
-    const handleUpdateStatus = async (title: string, newStatus: TaskStatus) => {
+    const handleUpdateStatus = async (title: string, newStatus: Task['status']) => {
         const result = await updateTask(title, { status: newStatus });
         if (result.success) {
             loadTasks();
@@ -132,7 +132,7 @@ export default function TodoPage() {
                                     <div className="mt-auto pt-2 flex space-x-4 border-t">
                                         <select
                                             value={task.status}
-                                            onChange={(e) => handleUpdateStatus(task.title, e.target.value as TaskStatus)}
+                                            onChange={(e) => handleUpdateStatus(task.title, e.target.value as Task['status'])}
                                             className="p-1.5 border rounded"
                                         >
                                             <option value="not_started">未着手</option>
