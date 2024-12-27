@@ -39,7 +39,7 @@ Reactにある便利な機能。使用する際はファイル冒頭に以下の
     ```tsx
     const [names, setNames] = useState< string[] >([]);
 
-    setNames ( ["牛乳じゃんけん全勝の田中", "写真に写ってるのに合成された佐藤"] );
+    setNames( ["牛乳じゃんけん全勝の田中", "写真に写ってるのに合成された佐藤"] );
 
     setNames( (currentNames) => [ ...currentNames, "実は入学できていなかった鈴木" ] );
     ```
