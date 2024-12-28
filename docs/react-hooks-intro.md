@@ -98,6 +98,7 @@ React に標準で含まれる Hooks です。
 | `useSyncExternalStore`     | 外部ストアと状態を同期します（ライブラリ作者向け）。                     |
 | `useInsertionEffect`       | CSSやDOMノードの挿入前に副作用を処理します（特殊用途）。                 |
 | `use`                      | 非同期データの直接取得と待機を行います（React 18+、Suspense向け）。      |
+| `useOptimistic`            | 楽観的なUI更新を実現するための状態管理を行います（React 18+）。           |
 
 ---
 
